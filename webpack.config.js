@@ -2,7 +2,10 @@ const path = require ("path");
 const HtmlHelperPlugin = require("html-webpack-plugin");
 
 module.exports = {
-    entry: "./src/js/index.js",
+    entry: [
+        "babel-polyfill",
+        "./src/js/index.js"
+    ],
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "js/bundle.js"
@@ -15,5 +18,15 @@ module.exports = {
             filename: "index.html",
             template: "./src/index.html"
         })
-    ]
+    ],
+    module : {
+        rules: [
+            {
+                test: /\.js$/,
+                use: {
+                    loader: "babel-loader"
+                }
+            }
+        ]
+    }
 };
