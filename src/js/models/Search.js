@@ -15,7 +15,7 @@ export default class Search {
     
             // Second approach.
             let result = await fetch(`https://forkify-api.herokuapp.com/api/search?&q=${this.query}`);
-            this.result = await result.json();
+            this.result = (await result.json()).recipes;
             console.log("Result without .then: ", this.result);
         } catch (e) {
             alert("Error: ", e);
