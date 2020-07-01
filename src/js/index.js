@@ -35,3 +35,12 @@ elements.searchForm.addEventListener("submit", e => {
     e.preventDefault(); // as it reloads the page by default. 
     controlSearch();
 });
+
+elements.searchResPages.addEventListener("click", e => {
+    const btn = e.target.closest(".btn-inline"); // Ensures that we select the common parent, instead of the variable sub elements (e.g. text, or svg arrow image). 
+    if (btn) {
+        const goToPage = parseInt(btn.dataset.goto, 10); // get the goto attribute. The 10 means 'base 10'; if 'base 2', is binary.
+        searchView.clearResults();
+        searchView.renderResults(state.search.result, goToPage);
+    }
+});
