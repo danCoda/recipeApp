@@ -25,10 +25,31 @@ export default class Recipe {
         // Assumption: We need 15 minutes to cook with 3 ingredients.
         const numIngredients = this.ingredients.length;
         const periods = Math.ceil(numIngredients / 3);
-        this.time = period * 15;
+        this.time = periods * 15;
     }
 
     calcServings() {
         this.servings = 4;
+    }
+
+    parseIngredients() {
+        const unitsLong = ["tablespoons", "tablespoon", "ounces", "ounce", "teaspoons", "teaspoon", "cups", "pounds"];
+        const unitsShort = ["tbsp", "tbsp", "oz", "oz", "tsp", "tsp", "cup", "pound"];
+
+        const newIngredients = this.ingredients.map(el => {
+            // Uniform units. 
+            let ingredient = el.toLowerCase();
+            unitsLong.forEach((unit, i) => { // Replace unitsLong with unitsShort.
+                ingredient = ingredient.replace(unit, unitShort[i]);
+            });
+
+            // Remove parenthesis.
+            ingredient = ingredient.replace(/ *\([^)]*\) */g, ""); // regex; regular expression
+
+            // Parse ingredients into count, unit and ingredients.
+
+            return ingredient; // map must return something.
+        });
+        this.ingredients = newIngredients;
     }
 }
