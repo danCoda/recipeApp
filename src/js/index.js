@@ -21,8 +21,7 @@ const state = {};
  */
 const controlSearch = async () => {
     // 1. Get query from view. 
-    //const query = searchView.getInput();
-    const query = "pizza";
+    const query = searchView.getInput();
 
     if (query) {
         // 2. New search object, and add to state. 
@@ -51,13 +50,6 @@ elements.searchForm.addEventListener("submit", e => {
     e.preventDefault(); // as it reloads the page by default. 
     controlSearch();
 });
-
-// TESTING
-window.addEventListener("load", e => { // When the window has loaded.
-    e.preventDefault(); // as it reloads the page by default. 
-    controlSearch();
-});
-
 
 elements.searchResPages.addEventListener("click", e => {
     const btn = e.target.closest(".btn-inline"); // Ensures that we select the common parent, instead of the variable sub elements (e.g. text, or svg arrow image). 
@@ -89,8 +81,9 @@ const controlRecipe = async () => {
         state.recipe = new Recipe(id);
 
         try {
-            // Get recipe data.
+            // Get recipe data and parse ingredients.
             await state.recipe.getRecipe();
+            state.recipe.parseIngredients();
 
             // Calculate servings and time.
             state.recipe.calcTime();
