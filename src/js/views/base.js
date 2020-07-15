@@ -1,9 +1,12 @@
+import Recipe from "../models/Recipe";
+
 export const elements = {
     searchInput: document.querySelector(".search__field"),
     searchForm: document.querySelector(".search"),
     searchResList: document.querySelector(".results__list"),
     searchRes: document.querySelector(".results"),
-    searchResPages: document.querySelector(".results__pages")
+    searchResPages: document.querySelector(".results__pages"),
+    recipe: document.querySelector(".recipe")
 };
 
 export const elementStrings = { // Object with our selectors, for reusability / easy reference / easy change. 
