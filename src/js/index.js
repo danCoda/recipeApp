@@ -80,6 +80,9 @@ const controlRecipe = async () => {
         recipeView.clearRecipe(); // Clear recipe loading area of any previously selected recipe.
         renderLoader(elements.recipe); // Render loader in elements.recipe.
 
+        // Highlight selected search item.
+        if (state.search) searchView.highlightSelected(id);
+
         // Create new recipe object.
         state.recipe = new Recipe(id);
 
@@ -97,6 +100,7 @@ const controlRecipe = async () => {
             recipeView.renderRecipe(state.recipe);
         } catch (e) {
             alert("Error processing recipe :( ");
+            console.warn("Error: ", e);
         }
     }
 };

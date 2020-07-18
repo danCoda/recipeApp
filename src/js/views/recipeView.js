@@ -1,7 +1,30 @@
 import { elements } from "./base";
+import { fraction } from "mathjs"; // We use mathjs instead of 'fraction', because the latter is buggy.
 
 export const clearRecipe = () => {
     elements.recipe.innerHTML = "";
+};
+
+const formatCount = count => {
+    console.log("Count: ", count);
+    if (count) {
+        // example: 2.5 => 2 1/2.
+        const [int, dec] = count.toString().split(".").map(num => parseInt(num, 10)); // int: 2, dec: 5.
+
+        if (!dec) return count;
+
+        if (int === 0) {
+            // e.g. 0.5. 
+            const fr = new fraction(count);
+            // fr.n is numerator; fr.d is denominator.
+            return `${fr.n}/${fr.d}`; // 1/2.
+        } else {
+            // e.g. 2.5.
+            const fr = new fraction(count - int); // We just want the fraction for the decimals part. 
+            return `${int} ${fr.n}/${fr.d}`; // 2 1/2.
+        }
+    }
+    return "?";
 };
 
 const createIngredient = ingredient => `
@@ -9,7 +32,7 @@ const createIngredient = ingredient => `
         <svg class="recipe__icon">
             <use href="img/icons.svg#icon-check"></use>
         </svg>
-        <div class="recipe__count">${ingredient.count}</div>
+        <div class="recipe__count">${formatCount(ingredient.count)}</div>
         <div class="recipe__ingredient">
             <span class="recipe__unit">${ingredient.unit}</span>
             ${ingredient.ingredient}
