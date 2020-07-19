@@ -108,3 +108,21 @@ const controlRecipe = async () => {
 /* window.addEventListener("hashchange", controlRecipe); // the hash is... the has after the query in the url. "...www.google.com?#123"; 123.
 window.addEventListener("load", controlRecipe);  */
 ["hashchange", "load"].forEach(event => window.addEventListener(event, controlRecipe));
+
+// Handling recipe button clicks.
+elements.recipe.addEventListener("click", e => {
+    if (e.target.matches(".btn-decrease, .btn-decrease *")) { // .btn-decrease, or any child element of it. 
+        // Decrease button's clicked.
+        if (state.recipe.servings > 1) {
+            state.recipe.updateServings("dec");
+            recipeView.updateServingsIngredients(state.recipe);
+        }
+    };
+
+    if (e.target.matches(".btn-increase, .btn-increase *")) {
+        state.recipe.updateServings("inc");
+        recipeView.updateServingsIngredients(state.recipe);
+    };
+
+    console.log(state.recipe);
+});
