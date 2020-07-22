@@ -130,7 +130,7 @@ const controlList = () => {
 
 // Handle delete and update list item events.
 elements.shopping.addEventListener("click", e => {
-    const id = e.target.closest(".shopping__item").dataset.itemid; // Gets the itemId based on the closest .shopping__item.
+    const id = e.target.closest(".shopping__item").dataset.itemId; // Gets the itemId based on the closest .shopping__item.
 
     // Handle delete button.
     if (e.target.matches(".shopping__delete, .shopping__delete *")) {
