@@ -5,6 +5,7 @@ import Likes from "./models/Likes";
 import * as searchView from "./views/searchView";
 import * as recipeView from "./views/recipeView";
 import * as listView from "./views/listView";
+import * as likesView from "./views/likesView";
 import {
     elements,
     renderLoader,
@@ -100,7 +101,10 @@ const controlRecipe = async () => {
 
             // Render recipe.
             clearLoader();
-            recipeView.renderRecipe(state.recipe);
+            recipeView.renderRecipe(
+                state.recipe,
+                state.likes.isLiked(id)
+            );
         } catch (e) {
             alert("Error processing recipe :( ");
             console.warn("Error: ", e);
@@ -138,7 +142,7 @@ elements.shopping.addEventListener("click", e => {
         // Delete from state.
         state.list.deleteItem(id);
         // Delete from UI.
-       listView.deleteItem(id);
+        listView.deleteItem(id);
     } else if (e.target.matches(".shopping__count-value")) {
         // Update ingredient value (amount).
         const value = parseFloat(e.target.value, 10);
@@ -151,27 +155,34 @@ elements.shopping.addEventListener("click", e => {
  * LIKE CONTROLLER
  * 
  */
+
+// testing
+state.likes = new Likes();
+likesView.toggleLikeMenu(state.likes.getNumLikes());
+
 const controlLike = () => {
     if (!state.likes) state.likes = new Likes();
     const currentId = state.recipe.id;
 
-    // User has not yet liked current recipe.
     if (!state.likes.isLiked(currentId)) {
+        // User has not yet liked current recipe.
         // Add like to the stake.
         const newLike = state.likes.addLike(currentId, state.recipe.title, state.recipe.author, state.recipe.img);
-        
         // Toggle like button.
+        likesView.toggleLikeBtn(true);
         // Add like to the UI list.
-        console.log(state.likes);
-
-    // User has liked current recipe.
+        likesView.renderLike(newLike);
     } else {
+        // User has liked current recipe.
         // Remove like from the stake.
-        state.likes.deleteLike(currentId); 
+        state.likes.deleteLike(currentId);
         // Toggle the like button.
+        likesView.toggleLikeBtn(false);
         // Remove like from UI list.
-        console.log(state.likes);
+        likesView.deleteLike(currentId);
     }
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
+
 }
 
 
