@@ -9,6 +9,7 @@ import {
     renderLoader,
     clearLoader
 } from "./views/base";
+import Likes from "./models/Likes";
 /** GLobal state of the app
  * - Search object
  * Current recipe object
@@ -145,6 +146,35 @@ elements.shopping.addEventListener("click", e => {
     };
 });
 
+/**
+ * 
+ * LIKE CONTROLLER
+ * 
+ */
+const controlLike = () => {
+    if (!state.likes) state.likes = new Likes();
+    const currentId = state.recipe.id;
+
+    // User has not yet liked current recipe.
+    if (!state.likes.isLiked(currentId)) {
+        // Add like to the stake.
+        const newLike = state.likes.addLike(currentId, state.recipe.title, state.recipe.author, state.recipe.img);
+        
+        // Toggle like button.
+        // Add like to the UI list.
+        console.log(state.likes);
+
+    // User has liked current recipe.
+    } else {
+        // Remove like from the stake.
+        state.likes.deleteLike(currentId); 
+        // Toggle the like button.
+        // Remove like from UI list.
+        console.log(state.likes);
+    }
+}
+
+
 // Handling recipe button clicks.
 elements.recipe.addEventListener("click", e => {
     if (e.target.matches(".btn-decrease, .btn-decrease *")) { // .btn-decrease, or any child element of it. 
@@ -157,6 +187,10 @@ elements.recipe.addEventListener("click", e => {
         state.recipe.updateServings("inc");
         recipeView.updateServingsIngredients(state.recipe);
     } else if (e.target.matches(".recipe__btn--add, .recipe__btn--add *")) {
+        // Add ingredients to shopping list. 
         controlList();
+    } else if (e.target.matches(".recipe__love, .recipe__love *")) {
+        // Add ingredients to like list. 
+        controlLike();
     };
 });
