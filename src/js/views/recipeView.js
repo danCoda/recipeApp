@@ -6,7 +6,6 @@ export const clearRecipe = () => {
 };
 
 const formatCount = count => {
-    console.log("Count: ", count);
     if (count) {
         // example: 2.5 => 2 1/2.
         const [int, dec] = count.toString().split(".").map(num => parseInt(num, 10)); // int: 2, dec: 5.

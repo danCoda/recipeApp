@@ -13,16 +13,18 @@ import {
 } from "./views/base";
 /** GLobal state of the app
  * - Search object
- * Current recipe object
- * Shopping list object
- * Liked recipes.
+ * - Current recipe object
+ * - Shopping list object
+ * - Liked recipes.
  */
 
 // Our global state variable:
 const state = {};
-window.state = state;
+
 /**
- * Search controller
+ * 
+ * SEARCH CONTROLLER
+ * 
  */
 const controlSearch = async () => {
     // 1. Get query from view. 
@@ -66,15 +68,9 @@ elements.searchResPages.addEventListener("click", e => {
 });
 
 /**
- * Search controller
- */
-const recipe = new Recipe(35477); // Recipe for "Pizza dip".
-recipe.getRecipe();
-console.log(recipe);
-
-
-/**
- * Search controller
+ * 
+ * RECIPE CONTROLLER
+ * 
  */
 const controlRecipe = async () => {
     // Get the ID from the URL.
@@ -112,10 +108,9 @@ const controlRecipe = async () => {
     }
 };
 
-/* window.addEventListener("hashchange", controlRecipe); // the hash is... the has after the query in the url. "...www.google.com?#123"; 123.
+/* window.addEventListener("hashchange", controlRecipe); // the hash is... the stuff after the query in the url. "...www.google.com?#123"; 123.
 window.addEventListener("load", controlRecipe);  */
 ["hashchange", "load"].forEach(event => window.addEventListener(event, controlRecipe));
-
 
 /**
  * 

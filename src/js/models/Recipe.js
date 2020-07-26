@@ -16,7 +16,7 @@ export default class Recipe {
             this.url = result.source_url;
             this.ingredients = result.ingredients;
         } catch (e) {
-            console.log(e);
+            (e);
             alert("Something went wrong!");
         }
     }
@@ -86,7 +86,6 @@ export default class Recipe {
             return objIngredient; // map must return something.
         });
         this.ingredients = newIngredients;
-        console.log(this.ingredients);
     }
 
     updateServings(type) { // Type can be 'dec' for 'decrease'.
