@@ -135,7 +135,7 @@ const controlList = () => {
 
 // Handle delete and update list item events.
 elements.shopping.addEventListener("click", e => {
-    const id = e.target.closest(".shopping__item").dataset.itemId; // Gets the itemId based on the closest .shopping__item.
+    const id = e.target.closest(".shopping__item").dataset.itemid; // Gets the itemid based on the closest .shopping__item. itemid must not be in camalCase.
 
     // Handle delete button.
     if (e.target.matches(".shopping__delete, .shopping__delete *")) {
@@ -155,11 +155,6 @@ elements.shopping.addEventListener("click", e => {
  * LIKE CONTROLLER
  * 
  */
-
-// testing
-state.likes = new Likes();
-likesView.toggleLikeMenu(state.likes.getNumLikes());
-
 const controlLike = () => {
     if (!state.likes) state.likes = new Likes();
     const currentId = state.recipe.id;
@@ -182,8 +177,17 @@ const controlLike = () => {
         likesView.deleteLike(currentId);
     }
     likesView.toggleLikeMenu(state.likes.getNumLikes());
+};
 
-}
+// Restore liked recipes on page load. 
+window.addEventListener("load", () => {
+    state.likes = new Likes();
+    state.likes.readStorage(); // Update state.likes with stored likes.
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+    // Render the existing likes.
+    state.likes.likes.forEach(like => likesView.renderLike(like));
+});
 
 
 // Handling recipe button clicks.
@@ -197,7 +201,7 @@ elements.recipe.addEventListener("click", e => {
     } else if (e.target.matches(".btn-increase, .btn-increase *")) { // .btn-increase or any of its child elements.
         state.recipe.updateServings("inc");
         recipeView.updateServingsIngredients(state.recipe);
-    } else if (e.target.matches(".recipe__btn--add, .recipe__btn--add *")) {
+    } else if (e.target.matches(".recipe__btn, .recipe__btn *")) {
         // Add ingredients to shopping list. 
         controlList();
     } else if (e.target.matches(".recipe__love, .recipe__love *")) {
