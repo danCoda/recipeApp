@@ -4,8 +4,8 @@ import {
 
 export const getInput = () => elements.searchInput.value;
 
-export const clearInput = () => {
-    elements.searchInput.value = ""; // We aren't returning anything, so must be in curly braces.
+export const clearInput = () => { // We aren't returning anything, so must be in curly braces.
+    elements.searchInput.value = ""; 
 };
 
 export const clearResults = () => {
